@@ -1,8 +1,8 @@
+import Floor from '../../components/floor/floor';
+
 const Home = () => {
   return (
-    <div>
-      hello
-    </div>
+      <Floor /> 
   );
 }
 
