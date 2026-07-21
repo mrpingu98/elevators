@@ -1,0 +1,9 @@
+@use './fonts' as fonts;
+
+body {
+    display: flex;
+    flex-direction: column;
+    font-family: fonts.$regular-font;
+    font-size: 1rem;
+    padding: 2rem;
+}
