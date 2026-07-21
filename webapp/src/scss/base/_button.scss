@@ -1,0 +1,15 @@
+@use './fonts' as fonts;
+
+button {
+    font-family: fonts.$regular-font;
+    font-size: 1rem;
+    padding: 1rem;
+    border: none;
+    height: 6rem;
+    width: 6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    cursor: pointer;
+}

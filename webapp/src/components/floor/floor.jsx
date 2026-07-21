@@ -1,12 +1,16 @@
 import React from 'react';
 import styles from './floor.module.scss';
+import FloorButton from '../floorButton/floorButton';
+
+//topFloor, bottomFloor
 
 const Floor = () => {
   return (
     <div className={styles.floorContainer}>
+        <h1>Floor 1</h1>
         <div>
-            Floor 1
-            Call Lift Button
+          <FloorButton direction="up" />
+          <FloorButton direction="down" />
         </div>
         <div className={styles.elevatorContainer}>
           Elevator
