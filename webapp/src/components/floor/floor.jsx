@@ -1,25 +1,56 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import styles from './floor.module.scss';
 import FloorButton from '../floorButton/floorButton';
+import Elevator from '../elevator/elevator';
+import ElevatorButton from '../elevatorButton/elevatorButton';
 
 //topFloor, bottomFloor
 
-const Floor = () => {
+const FloorButtons = ({ topFloor, bottomFloor }) => {
   return (
-    <div className={styles.floorContainer}>
-        <h1>Floor 1</h1>
-        <div>
+    <div className={styles.floorButtonsContainer}>
+      {topFloor && <FloorButton direction="down" />}
+      {bottomFloor && <FloorButton direction="up" />}
+      {!topFloor && !bottomFloor && (
+        <>
           <FloorButton direction="up" />
           <FloorButton direction="down" />
-        </div>
-        <div className={styles.elevatorContainer}>
-          Elevator
-          <div>
-            Elevator Buttons
-          </div>
-        </div>
+        </>
+      )}
     </div>
   );
 }
+
+FloorButtons.propTypes = {
+  topFloor: PropTypes.bool,
+  bottomFloor: PropTypes.bool,
+};
+
+const Floor = ({ children, floorNumber, topFloor, bottomFloor }) => {
+  return (
+    <div className={styles.floorContainer}>
+      <h1>Floor {floorNumber}</h1>
+      <FloorButtons topFloor={topFloor} bottomFloor={bottomFloor} />
+      <div className={styles.elevatorContainer}>
+        <Elevator />
+        {bottomFloor &&
+          <div className={styles.elevatorButtonsContainer}>
+            <ElevatorButton floor={1} />
+            <ElevatorButton floor={2} />
+          </div>
+        }
+      </div>
+      {children}
+    </div>
+  );
+}
+
+Floor.propTypes = {
+  children: PropTypes.node,
+  floorNumber: PropTypes.number.isRequired,
+  topFloor: PropTypes.bool,
+  bottomFloor: PropTypes.bool,
+};
 
 export default Floor;
