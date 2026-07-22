@@ -27,7 +27,7 @@ FloorButtons.propTypes = {
   bottomFloor: PropTypes.bool,
 };
 
-const Floor = ({ children, floorNumber, topFloor, bottomFloor }) => {
+const Floor = ({ floorNumber, topFloor, bottomFloor }) => {
   return (
     <div className={styles.floorContainer}>
       <h1>Floor {floorNumber}</h1>
@@ -41,13 +41,11 @@ const Floor = ({ children, floorNumber, topFloor, bottomFloor }) => {
           </div>
         }
       </div>
-      {children}
     </div>
   );
 }
 
 Floor.propTypes = {
-  children: PropTypes.node,
   floorNumber: PropTypes.number.isRequired,
   topFloor: PropTypes.bool,
   bottomFloor: PropTypes.bool,
