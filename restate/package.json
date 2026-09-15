@@ -1,0 +1,14 @@
+{
+  "dependencies": {
+    "@restatedev/restate": "^1.7.8",
+    "@restatedev/restate-sdk": "^1.16.9",
+    "@restatedev/restate-server": "^1.7.8"
+  },
+  "scripts": {
+    "dev": "ts-node --transpile-only"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "tsx": "^4.23.12"
+  }
+}
