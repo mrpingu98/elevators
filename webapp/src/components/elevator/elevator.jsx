@@ -10,7 +10,7 @@ const Elevator = ({ state }) => {
 }
 
 Elevator.propTypes = {
-  state: PropTypes.oneOf(['moving', 'stopped', 'idle']).isRequired,
+  state: PropTypes.oneOf(['moving', 'stopped', 'idle']),
 };
 
 export default Elevator;
