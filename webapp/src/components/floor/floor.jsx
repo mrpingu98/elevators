@@ -5,17 +5,15 @@ import FloorButton from '../floorButton/floorButton';
 import Elevator from '../elevator/elevator';
 import ElevatorButton from '../elevatorButton/elevatorButton';
 
-//topFloor, bottomFloor
-
-const FloorButtons = ({ topFloor, bottomFloor }) => {
+const FloorButtons = ({ topFloor, bottomFloor, floorNumber}) => {
   return (
     <div className={styles.floorButtonsContainer}>
-      {topFloor && <FloorButton direction="down" />}
-      {bottomFloor && <FloorButton direction="up" />}
+      {topFloor && <FloorButton direction="down" floorNumber={floorNumber}/>}
+      {bottomFloor && <FloorButton direction="up" floorNumber={floorNumber} />}
       {!topFloor && !bottomFloor && (
         <>
-          <FloorButton direction="up" />
-          <FloorButton direction="down" />
+          <FloorButton direction="up" floorNumber={floorNumber} />
+          <FloorButton direction="down" floorNumber={floorNumber} />
         </>
       )}
     </div>
@@ -25,13 +23,14 @@ const FloorButtons = ({ topFloor, bottomFloor }) => {
 FloorButtons.propTypes = {
   topFloor: PropTypes.bool,
   bottomFloor: PropTypes.bool,
+  floorNumber: PropTypes.number
 };
 
 const Floor = ({ floorNumber, topFloor, bottomFloor }) => {
   return (
     <div className={styles.floorContainer}>
       <h1>Floor {floorNumber}</h1>
-      <FloorButtons topFloor={topFloor} bottomFloor={bottomFloor} />
+      <FloorButtons topFloor={topFloor} bottomFloor={bottomFloor} floorNumber={floorNumber}/>
       <div className={styles.elevatorContainer}>
         <Elevator />
         {bottomFloor &&
