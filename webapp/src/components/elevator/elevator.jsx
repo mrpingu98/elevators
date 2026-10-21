@@ -3,14 +3,15 @@ import PropTypes from 'prop-types';
 import styles from './elevator.module.scss';
 import clsx from 'clsx';
 
-const Elevator = ({ state }) => {
+const Elevator = ({ state, activeFloor }) => {
+  console.log()
   return (
-    <div className={clsx(styles.container, styles.state)}></div>
+    <div className={clsx(styles.container, (activeFloor && styles.active))}></div>
   );
 }
 
 Elevator.propTypes = {
-  state: PropTypes.oneOf(['moving', 'stopped', 'idle']),
+  activeFloor: PropTypes.bool
 };
 
 export default Elevator;
