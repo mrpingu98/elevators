@@ -1,9 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { useContext } from 'react'
 import styles from './floor.module.scss';
 import FloorButton from '../floorButton/floorButton';
 import Elevator from '../elevator/elevator';
 import ElevatorButton from '../elevatorButton/elevatorButton';
+import { CurrentFloorContext } from '../../context';
 
 const FloorButtons = ({ topFloor, bottomFloor, floorNumber}) => {
   return (
@@ -27,12 +29,14 @@ FloorButtons.propTypes = {
 };
 
 const Floor = ({ floorNumber, topFloor, bottomFloor }) => {
+  const { currentFloor } = useContext(CurrentFloorContext)
+
   return (
     <div className={styles.floorContainer}>
       <h1>Floor {floorNumber}</h1>
-      <FloorButtons topFloor={topFloor} bottomFloor={bottomFloor} floorNumber={floorNumber}/>
+      <FloorButtons topFloor={topFloor} bottomFloor={bottomFloor} floorNumber={floorNumber}/> 
       <div className={styles.elevatorContainer}>
-        <Elevator />
+        <Elevator activeFloor={floorNumber === currentFloor}/>
         {bottomFloor &&
           <div className={styles.elevatorButtonsContainer}>
             <ElevatorButton floor={1} />
