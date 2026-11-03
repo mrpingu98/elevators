@@ -1,31 +1,26 @@
 import Floor from '../../components/floor/floor';
 import { CurrentFloorContext } from '../../context';
 import { useContext } from 'react';
+import { request } from '../../api/request';
 
 
 const Home = () => {
   const { setCurrentFloor } = useContext(CurrentFloorContext)
 
-  const handleOnClick = async ()  => {
-      const url = `http://localhost:8080/ElevatorObject/2/getCurrentFloor`;
-      try {
-        const response = await fetch(url, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        if (!response.ok) {
-          throw new Error(`Response status: ${response.status}`);
-        }    
-        const data = await response.json()
-        if (response.ok){
-          setCurrentFloor(data)
-        }
-      } catch (error) {
-        console.error(error.message);
+  const handleOnClick = async () => {
+    try {
+      const response = await request({
+        url: `http://localhost:8080/ElevatorObject/2/getCurrentFloor`,
+        method: 'GET'
+      })
+      if (response !== null) {
+        setCurrentFloor(response)
       }
     }
+    catch (error) {
+      console.error(error.status, error.message)
+    }
+  }
 
   return (
     <>
