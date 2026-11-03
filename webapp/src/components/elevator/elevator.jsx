@@ -4,7 +4,6 @@ import styles from './elevator.module.scss';
 import clsx from 'clsx';
 
 const Elevator = ({ state, activeFloor }) => {
-  console.log()
   return (
     <div className={clsx(styles.container, (activeFloor && styles.active))}></div>
   );

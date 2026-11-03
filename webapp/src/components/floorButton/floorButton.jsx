@@ -2,28 +2,23 @@ import { GoArrowUp, GoArrowDown } from "react-icons/go";
 import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './floorbutton.module.scss';
+import { request } from "../../api/request";
 
 const FloorButton = ({ direction = 'up', floorNumber }) => {
-    const requestElevator = async () => {
-        const url = `http://localhost:8080/ElevatorObject/2/floorCall`;
+    const handleOnClick = async () => {
         try {
-            const response = await fetch(url, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ requestFloor: floorNumber })
-            });
-            if (!response.ok) {
-                throw new Error(`Response status: ${response.status}`);
-            }
+            await request({
+                url: `http://localhost:8080/ElevatorObject/2/floorCall`,
+                method: 'POST',
+                body: { requestFloor: floorNumber }
+            })
         } catch (error) {
-            console.error(error.message);
+            console.error(error.status, error.message)
         }
     }
 
     return (
-        <button className={styles.button} onClick={requestElevator}>
+        <button className={styles.button} onClick={handleOnClick}>
             {direction === "up" && <GoArrowUp size="3rem" />}
             {direction === "down" && <GoArrowDown size="3rem" />}
         </button>
