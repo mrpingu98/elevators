@@ -3,6 +3,19 @@
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
+    margin-bottom: 2rem;
+}
+
+.elevatorEntrance {
+    display: flex;
+    width: 7.5rem;
+    height: 15rem;
+    border: 1px solid black;
+    border-radius: 0.5rem;
+}
+
+.active {
+    background-color: green;
 }
 
 .elevatorContainer {

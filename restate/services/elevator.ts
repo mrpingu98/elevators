@@ -71,6 +71,8 @@ export const elevator = restate.object({
                 return `Elevator called to ${req.requestFloor}`
             }
         }),
+        //replace 'req' with 'input' for default - more express terminology, isn't necesarily a server handling ahttp request - just 'any input' to the handler 
+        //also a request object on the ctx object that is something different... information about the invocations request 
     },
 })
 

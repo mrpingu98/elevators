@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 import styles from './floorbutton.module.scss';
 import { request } from "../../api/request";
 
-const FloorButton = ({ direction = 'up', floorNumber }) => {
+const FloorButton = ({ direction = 'up', floorNumber, elevator }) => {
     const handleOnClick = async () => {
         try {
             await request({
-                url: `http://localhost:8080/ElevatorObject/2/floorCall`,
+                url: `http://localhost:8080/elevator/${elevator}/call`,
                 method: 'POST',
                 body: { requestFloor: floorNumber }
             })
@@ -27,7 +27,8 @@ const FloorButton = ({ direction = 'up', floorNumber }) => {
 
 FloorButton.propTypes = {
     direction: PropTypes.oneOf(['up', 'down']).isRequired,
-    floorNumber: PropTypes.number.isRequired
+    floorNumber: PropTypes.number.isRequired,
+    elevator: PropTypes.string.isRequired
 };
 
 export default FloorButton;
