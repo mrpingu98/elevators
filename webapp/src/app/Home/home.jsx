@@ -1,20 +1,20 @@
-import Floor from '../../components/floor/floor';
-import { CurrentFloorContext } from '../../context';
-import { useContext } from 'react';
+import { useEffect, useState } from 'react';
 import { request } from '../../api/request';
-
+import Building from '../../components/building/building';
 
 const Home = () => {
-  const { setCurrentFloor } = useContext(CurrentFloorContext)
+  const [floors, setFloors] = useState(0)
+  const [elevators, setElevators] = useState()
 
-  const handleOnClick = async () => {
+  const getBuildings = async () => {
     try {
       const response = await request({
-        url: `http://localhost:8080/ElevatorObject/2/getCurrentFloor`,
+        url: 'http://localhost:8080/building/buildingOne/snapshot',
         method: 'GET'
       })
       if (response !== null) {
-        setCurrentFloor(response)
+        setFloors(response.floorCount)
+        setElevators(response.elevators)
       }
     }
     catch (error) {
@@ -22,13 +22,26 @@ const Home = () => {
     }
   }
 
+  //how do I check/verify the response shape?
+  useEffect(() => {
+    getBuildings()
+  },[])
+
   return (
     <>
-      <Floor floorNumber={1} topFloor />
-      <Floor floorNumber={0} bottomFloor />
-      <button onClick={handleOnClick}>Refresh restate test</button>
+      <Building numberOfFloors={floors} elevators={elevators}/>
+      <button onClick={getBuildings}>Refresh restate test</button>
     </>
   );
 }
 
 export default Home;
+
+//Restate is now the 'source of truth' - I will create a building in Restate
+//app will then grab this building and all its details, and from this create the floors and elevators 
+
+//floors and elevators need to be 'independent' components - not 'within' each other 
+//top level component should now be a 'building' 
+
+//number of floors = x. While i < x, create another floor component. Is this the first/last floor component? If true, pass top/bottomFloor prop through for floor buttons 
+//

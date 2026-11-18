@@ -3,17 +3,29 @@
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
+    margin-bottom: 2rem;
 }
 
-.elevatorContainer {
+.elevatorEntranceContainer {
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    flex-direction: row;
     align-items: center;
-    position: relative;
+    max-width: 18rem;
+    min-width: 18rem;
 }
 
-.elevatorButtonsContainer {
-    position: absolute;
-    top: 25rem;
+.elevatorEntrance {
+    display: flex;
+    width: 7.5rem;
+    height: 15rem;
+    border: 1px solid black;
+    border-radius: 0.5rem;
+}
+
+.active {
+    background-color: green;
+}
+
+.floorButtonsContainer {
+    margin-right: 2rem;
 }

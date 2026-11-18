@@ -36,18 +36,9 @@ const elevatorObject = restate.object({
     }
 })
 
-restate.serve({
-    services: [elevatorObject],
-    port: 9080,
-});
-
-
-
-// import * as restate from '@restatedev/restate-sdk'
-// import * as z from 'zod'
-
 type ElevatorState = {
-    currentFloor: number
+    currentFloor: number,
+    requestFloor: number
 }
 
 export const elevator = restate.object({
@@ -63,6 +54,25 @@ export const elevator = restate.object({
                 currentFloor,
             }
         }),
+        call: restate.createObjectHandler({
+            input: restate.serde.schema(z.object({
+                requestFloor: z.number()
+            }))
+        }, async (ctx: restate.ObjectContext<State>, req) => {
+            const currentFloor = await ctx.get('currentFloor') ?? 0
+            ctx.set("requestFloor", req.requestFloor)
+
+            if (currentFloor === req.requestFloor) {
+                return 'Elevator not called, already on requested floor'
+            }
+
+            if (currentFloor !== req.requestFloor) {
+                ctx.set("currentFloor", req.requestFloor)
+                return `Elevator called to ${req.requestFloor}`
+            }
+        }),
+        //replace 'req' with 'input' for default - more express terminology, isn't necesarily a server handling ahttp request - just 'any input' to the handler 
+        //also a request object on the ctx object that is something different... information about the invocations request 
     },
 })
 
@@ -104,6 +114,12 @@ export const building = restate.object({
         }),
     },
 })
+
+restate.serve({
+    services: [elevatorObject, elevator, building],
+    port: 9080,
+});
+
 //create - create me a building with this many floors and elevators 
 //snapshot - what is my current state of the building 
 
