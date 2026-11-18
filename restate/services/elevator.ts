@@ -54,7 +54,7 @@ export const elevator = restate.object({
                 currentFloor,
             }
         }),
-        call: restate.createObjectHandler({
+        floorButtonRequest: restate.createObjectHandler({
             input: restate.serde.schema(z.object({
                 requestFloor: z.number()
             }))
@@ -71,8 +71,23 @@ export const elevator = restate.object({
                 return `Elevator called to ${req.requestFloor}`
             }
         }),
-        //replace 'req' with 'input' for default - more express terminology, isn't necesarily a server handling ahttp request - just 'any input' to the handler 
-        //also a request object on the ctx object that is something different... information about the invocations request 
+        elevatorButtonRequest: restate.createObjectHandler({
+            input: restate.serde.schema(z.object({
+                requestFloor: z.number()
+            }))
+        }, async (ctx: restate.ObjectContext<State>, req) => {
+            const currentFloor = await ctx.get('currentFloor') ?? 0
+            ctx.set("requestFloor", req.requestFloor)
+
+            if (currentFloor === req.requestFloor) {
+                return 'Already on requested floor'
+            }
+
+            if (currentFloor !== req.requestFloor) {
+                ctx.set("currentFloor", req.requestFloor)
+                return `Elevator requested for floor ${req.requestFloor}`
+            }
+        }), 
     },
 })
 

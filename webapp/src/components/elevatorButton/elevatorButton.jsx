@@ -1,15 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const ElevatorButton = ({ floor, elevatorId}) => {
+const ElevatorButton = ({ floor, onClick}) => {
   return (
-    <button>{floor}</button>
+    <button onClick={onClick}>{floor}</button>
   )
 }
 
 ElevatorButton.propTypes = {
   floor: PropTypes.number.isRequired,
-  elevatorId: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
 }
 
 export default ElevatorButton
