@@ -1,35 +1,25 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-// import { useContext } from 'react'
+import clsx from 'clsx'
 import styles from './floor.module.scss';
 import FloorButton from '../floorButton/floorButton';
-// import Elevator from '../elevator/elevator';
-// import ElevatorButton from '../elevatorButton/elevatorButton';
-// import { CurrentFloorContext } from '../../context';
+import { request } from '../../api/request';
 
-const FloorButtons = ({ topFloor, bottomFloor, floorNumber, elevator }) => {
-  return (
-    <div className={styles.floorButtonsContainer}>
-      {topFloor && <FloorButton direction="down" floorNumber={floorNumber} elevator={elevator}/>}
-      {bottomFloor && <FloorButton direction="up" floorNumber={floorNumber} elevator={elevator} />}
-      {!topFloor && !bottomFloor && (
-        <>
-          <FloorButton direction="up" floorNumber={floorNumber} elevator={elevator} />
-          <FloorButton direction="down" floorNumber={floorNumber} elevator={elevator} />
-        </>
-      )}
-    </div>
-  );
-}
-
-FloorButtons.propTypes = {
-  topFloor: PropTypes.bool,
-  bottomFloor: PropTypes.bool,
-  floorNumber: PropTypes.number,
-  elevator: PropTypes.string.isRequired
-};
 
 const Floor = ({ floorNumber, topFloor, bottomFloor, elevators }) => {
+
+  const handleOnClick = async (elevatorId) => {
+    try {
+      await request({
+        url: `http://localhost:8080/elevator/${elevatorId}/call`,
+        method: 'POST',
+        body: { requestFloor: floorNumber }
+      })
+    } catch (error) {
+      console.error(error.status, error.message)
+    }
+  }
+
   return (
     <div className={styles.floorContainer}>
       <div>
@@ -37,10 +27,19 @@ const Floor = ({ floorNumber, topFloor, bottomFloor, elevators }) => {
       </div>
       {elevators?.map((elevator) => {
         return (
-        <div className='elevatorEntranceContainer'>
-            <FloorButtons topFloor={topFloor} bottomFloor={bottomFloor} floorNumber={floorNumber} elevator={elevator.id}/>
-        <div className={`${styles.elevatorEntrance} , ${(floorNumber === elevator.currentFloor) ? styles.active : ''}`}></div>
-        </div>
+          <div className={styles.elevatorEntranceContainer}>
+            <div className={styles.floorButtonsContainer}>
+              {topFloor && <FloorButton direction="down" handleOnClick={() => handleOnClick(elevator.id)} />}
+              {bottomFloor && <FloorButton direction="up" handleOnClick={() => handleOnClick(elevator.id)} />}
+              {!topFloor && !bottomFloor && (
+                <>
+                  <FloorButton direction="up" handleOnClick={() => handleOnClick(elevator.id)} />
+                  <FloorButton direction="down" handleOnClick={() => handleOnClick(elevator.id)} />
+                </>
+              )}
+            </div>
+            <div className={clsx(styles.elevatorEntrance, (floorNumber === elevator.currentFloor) && styles.active)}></div>
+          </div>
         )
       })}
     </div>

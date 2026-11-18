@@ -1,16 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './elevator.module.scss';
-import clsx from 'clsx';
+import ElevatorButton from '../elevatorButton/elevatorButton';
 
-const Elevator = ({ state, activeFloor }) => {
+const Elevator = ({ numberOfFloors, elevatorId }) => {
+      const floorButtons = []
+      if (numberOfFloors){
+          for (let i = 0; i < numberOfFloors; i++) {
+              floorButtons.push(<ElevatorButton floor={i} elevatorId={elevatorId}/>)
+          }
+      }
   return (
-    <div className={clsx(styles.container, (activeFloor && styles.active))}></div>
+    <div className={styles.container}>
+      {floorButtons.reverse()}
+    </div>
   );
 }
 
 Elevator.propTypes = {
-  activeFloor: PropTypes.bool
+  floors: PropTypes.number.isRequired,
+  elevatorId: PropTypes.string.isRequired,
 };
 
 export default Elevator;

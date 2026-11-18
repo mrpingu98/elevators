@@ -6,6 +6,14 @@
     margin-bottom: 2rem;
 }
 
+.elevatorEntranceContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    max-width: 18rem;
+    min-width: 18rem;
+}
+
 .elevatorEntrance {
     display: flex;
     width: 7.5rem;
@@ -18,15 +26,6 @@
     background-color: green;
 }
 
-.elevatorContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-}
-
-.elevatorButtonsContainer {
-    position: absolute;
-    top: 25rem;
+.floorButtonsContainer {
+    margin-right: 2rem;
 }
