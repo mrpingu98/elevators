@@ -19,7 +19,7 @@ const Building = ({ numberOfFloors, elevators }) => {
                 return (
                     <div className={styles.elevatorsContainer}>
                         <h1>Elevators</h1>
-                        <Elevator numberOfFloors={numberOfFloors} elevatorKey={elevator.id} />
+                        <Elevator numberOfFloors={numberOfFloors} elevatorId={elevator.id} />
                     </div>
                 )
             })

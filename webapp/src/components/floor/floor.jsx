@@ -11,7 +11,7 @@ const Floor = ({ floorNumber, topFloor, bottomFloor, elevators }) => {
   const handleOnClick = async (elevatorId) => {
     try {
       await request({
-        url: `http://localhost:8080/elevator/${elevatorId}/call`,
+        url: `http://localhost:8080/elevator/${elevatorId}/floorButtonRequest`,
         method: 'POST',
         body: { requestFloor: floorNumber }
       })

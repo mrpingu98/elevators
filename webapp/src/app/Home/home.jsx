@@ -36,12 +36,3 @@ const Home = () => {
 }
 
 export default Home;
-
-//Restate is now the 'source of truth' - I will create a building in Restate
-//app will then grab this building and all its details, and from this create the floors and elevators 
-
-//floors and elevators need to be 'independent' components - not 'within' each other 
-//top level component should now be a 'building' 
-
-//number of floors = x. While i < x, create another floor component. Is this the first/last floor component? If true, pass top/bottomFloor prop through for floor buttons 
-//
